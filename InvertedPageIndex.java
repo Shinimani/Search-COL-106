@@ -2,6 +2,7 @@
 public class InvertedPageIndex {
 	
 	public MyHashTable set;
+	public int TotalPages;
 
 	InvertedPageIndex()
 	{
@@ -18,8 +19,15 @@ public class InvertedPageIndex {
 			this.set.addPositionsForWord(ptr.getData());
 			ptr=ptr.getLink();
 		}
+		this.TotalPages++;
 		
 	}
+	
+	public int getTotalPages()
+	{
+		return this.TotalPages;
+	}
+	
 	
 	public Myset<PageEntry> getPagesWhichContainWord(String str)
 	{

@@ -54,15 +54,15 @@ public class WordEntry {
 		}
 		return ans;
 	}
-	
-	public float getTermFrequency(String word)
-	{
-		float fw = this.getCountInPage(word);
-		Node<Position> ptr = this.positionList.start;
-		PageEntry pe = new PageEntry(word);
-		float wp = pe.Wp;
-		return (fw/wp);
-	}
+
+	//	public float getTermFrequency(String word)
+//	{
+//		float fw = this.getCountInPage(word);
+//		Node<Position> ptr = this.positionList.start;
+//		PageEntry pe = new PageEntry(word);
+//		float wp = pe.TotalWords;
+//		return (fw/wp);
+//	}
 	
 	
 	

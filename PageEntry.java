@@ -8,12 +8,14 @@ public class PageEntry {
 	
 	public PageIndex pageindex;
 	public String name;
-	public int Wp;
+	public int TotalWords;
+	public InvertedPageIndex ipi;
 	
-	PageEntry(String pageName)
+	PageEntry(String pageName, InvertedPageIndex ipi)
 	{
 		this.pageindex = new PageIndex();
 		this.name = pageName;
+		this.ipi = ipi;
 		// Scanner s = new Scanner(pageName);
 		try 
 		{
@@ -84,7 +86,7 @@ public class PageEntry {
 	    	  }
 	      }
 	      
-	      this.Wp = c;
+	      this.TotalWords = c;
 
 	      // System.out.println("End");
 	      // System.out.println(temp);
@@ -102,6 +104,15 @@ public class PageEntry {
 	{
 		return this.pageindex;
 	}
+	
+	public float idfWord(String word)
+	{
+		float N = this.ipi.getTotalPages();
+		float nwp = this.ipi.getPagesWhichContainWord(word).size();
+		return (float) Math.log(N/nwp);
+	}
+	
+	
 	
 
 }

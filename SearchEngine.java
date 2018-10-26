@@ -17,7 +17,7 @@ public class SearchEngine {
 		if (x.equals("addPage"))
 			{
 				String y = s.next();
-				PageEntry p = new PageEntry(y);
+				PageEntry p = new PageEntry(y, ipi);
 				ipi.addPage(p);
 			}
 			else if (x.equals("queryFindPagesWhichContainWord"))
