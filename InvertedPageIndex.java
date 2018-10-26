@@ -52,6 +52,96 @@ public class InvertedPageIndex {
 		return ans;
 	}
 	
+	public int countOfPhraseInPage(String[] str, PageEntry page)
+	{
+		int ans = 0;
+		WordEntry firstWord = this.set.findWord(str[0]);
+		if (str.length == 1)
+		{
+			ans = firstWord.getCountInPage(page.name);
+		}
+		else
+		{
+			Node<Position> ptr = firstWord.positionList.start;
+			while (ptr != null)
+			
+			{
+				if(ptr.getData().getPageEntry().name.equals(page.name))
+				{
+					int i = 1;
+					while (i<str.length)
+					{
+						WordEntry tempWord = this.set.findWord(str[i]);
+						
+						AVLNode tempAVLNode = tempWord.avlTree.searchWC(ptr.getData().getWCIndex() + i);
+						//if we can't find that WCIndex, we move on to the next position of the first word
+						if (tempAVLNode.getData() == null)
+						{
+							break;
+						}
+						else
+						{
+							//if the page entry is also same, then we move to the next word of the phrase
+							if (tempAVLNode.getData().getPageEntry().name == ptr.getData().getPageEntry().name)
+							{
+								i++;
+								continue;
+							}
+							//if the page entry is not the same, we move to the node left of given node as there 
+							//can be multiple entries of same WCIndex in different pages
+							else 
+							{
+								if (tempAVLNode.left.getData().getWCIndex()==(ptr.getData().getWCIndex() + i))
+								{
+									boolean checker = false;
+									while(tempAVLNode.left.getData().getWCIndex()==(ptr.getData().getWCIndex() + i))
+									{
+										tempAVLNode = tempAVLNode.left;
+										if (tempAVLNode.getData().getPageEntry().name == ptr.getData().getPageEntry().name)
+										{
+											i++;
+											checker = true;
+											break;
+										}
+										else
+										{
+											continue;
+										}
+									}
+									if (!checker)
+									{
+										break;
+									}
+									else continue;
+								}
+								else break;
+									
+							}
+	
+						}
+					}
+					//if we came to the end of the phrase, then the page has the phrase, so we add the page entry
+					if (i==str.length)
+					{
+						ans++;
+						ptr = ptr.getLink();
+						continue;
+				}
+//				//else we move to the next position of the first word
+				else 
+					{
+						ptr = ptr.getLink();
+						continue;
+					}
+					
+					
+					
+				}
+			}
+		}
+		return ans;
+	}
+	
 	public Myset<PageEntry> getPagesWhichContainPhrase(String[] str)
 	{
 		Myset<PageEntry> ans = new Myset<PageEntry>();
@@ -162,38 +252,6 @@ public class InvertedPageIndex {
 				}
 				else tempHashEntry = tempHashEntry.next;
 			}
-			
-			
-//			int len = str.length;
-//			if (len != 1)
-//			{
-//				for(int i = 1;i<len;i++)
-//				{
-//					hash = set.getHashIndex(str[i]);
-//					temp = set.table[hash];
-//					while (temp!=null)
-//					{
-//						if (temp.key.equalsIgnoreCase(str[0]))
-//						{
-//							WordEntry temp1 = temp.value;
-//							Node<Position> ptr = temp1.positionList.start;
-//							while (ptr!=null)
-//							{
-//								ans.Insert(ptr.getData().getPageEntry());
-//								ptr = ptr.getLink();
-//							}
-//							break;
-//							
-//						}
-//						else temp = temp.next;
-//						
-//					}
-//				}
-//			}
-			
-			
-		
-
 		return ans;
 	}
 	

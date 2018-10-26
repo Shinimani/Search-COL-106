@@ -124,6 +124,47 @@ public class PageEntry {
 		return idfWord(word)*getTermFrequency(word);
 	}
 	
+	public float getRelavanceOR(String[] str)
+	{
+		float ans = 0;
+		for(int i =0; i<str.length;i++)
+		{
+			ans = ans + this.getRelevanceWord(str[i]);
+		}
+		return ans;
+	}
+	
+	public float getRelevanceAND(String[] str)
+	{
+		float ans = 0;
+		boolean checker = true;
+		int i = 0;
+		float temp = 0;
+		while(i<str.length)
+		{
+			temp = this.getRelevanceWord(str[i]);
+			if(temp==0)
+			{
+				checker = false;
+				break;
+			}
+			else ans = ans + temp;
+			i++;
+		}
+		if (checker)
+		{
+			return ans;
+		}
+		else return 0;
+	}
+	
+	public float getRelavancePhrase(String[] str)
+	{
+		int m = this.ipi.countOfPhraseInPage(str, this);
+		float tf = m/(this.TotalWords - (str.length - 1)*m);
+		float idf = (float) Math.log(this.ipi.getTotalPages()/this.ipi.getPagesWhichContainPhrase(str).size());
+		return tf*idf;
+	}
 	
 	
 	
