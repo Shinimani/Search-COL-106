@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class InvertedPageIndex {
 	
@@ -254,6 +255,54 @@ public class InvertedPageIndex {
 			}
 		return ans;
 	}
+	
+	
+	public ArrayList<SearchResult> sortedListOR(Myset<PageEntry> pageSet, String[] str)
+	{
+		Myset<SearchResult> searchSet = new Myset<SearchResult>();
+		Node<PageEntry> ptr = pageSet.ll.start;
+		while (ptr!=null)
+		{
+			float rel = ptr.getData().getRelavanceOR(str);
+			SearchResult temp = new SearchResult(ptr.getData(),rel);
+			searchSet.Insert(temp);
+			ptr = ptr.getLink();
+		}
+		MySort s = new MySort();
+		return s.sortThisList(searchSet);
+	}
+	
+	public ArrayList<SearchResult> sortedListAND(Myset<PageEntry> pageSet, String[] str)
+	{
+		Myset<SearchResult> searchSet = new Myset<SearchResult>();
+		Node<PageEntry> ptr = pageSet.ll.start;
+		while (ptr!=null)
+		{
+			float rel = ptr.getData().getRelevanceAND(str);
+			SearchResult temp = new SearchResult(ptr.getData(),rel);
+			searchSet.Insert(temp);
+			ptr = ptr.getLink();
+		}
+		MySort s = new MySort();
+		return s.sortThisList(searchSet);
+	}
+	
+	public ArrayList<SearchResult> sortedListPhrase(Myset<PageEntry> pageSet, String[] str)
+	{
+		Myset<SearchResult> searchSet = new Myset<SearchResult>();
+		Node<PageEntry> ptr = pageSet.ll.start;
+		while (ptr!=null)
+		{
+			float rel = ptr.getData().getRelavancePhrase(str);
+			SearchResult temp = new SearchResult(ptr.getData(),rel);
+			searchSet.Insert(temp);
+			ptr = ptr.getLink();
+		}
+		MySort s = new MySort();
+		return s.sortThisList(searchSet);
+	}
+	
+	
 	
 	
 	

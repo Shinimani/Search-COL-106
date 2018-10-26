@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -98,21 +99,18 @@ public class SearchEngine {
 				}
 				String[] arr = Arrays.copyOfRange(str, 0, i-1);
 				
-				
-				//yaha se aage ka dekh lena 
-				Myset<PageEntry> PageSet = ipi.getPagesWhichContainPhrase(arr);
-				Node<PageEntry> temp = PageSet.start();
-				String outp = "yoyoyoyo";
-				while (temp!=null)
+				ArrayList<SearchResult> ansList = this.ipi.sortedListPhrase(this.ipi.getPagesWhichContainPhrase(arr), arr);
+				String ans = "";
+				for (int k = 0; k<ansList.size();k++)
 				{
-					outp = outp + temp.getData().name + ", ";
-					temp = temp.getLink();
+					if (k==0)
+						ans = ansList.get(k).getPageEntry().name;
+					else
+					ans = ans + " -- " + ansList.get(k).getPageEntry().name;
 				}
-				if (!outp.equals("yoyoyoyo"))
-				{
-					outp = outp.substring(0, (outp.length() - 2));
-				} else outp = "not found";
-				System.out.println(outp);
+				System.out.println(ans);
+				
+				
 			}
 			
 
