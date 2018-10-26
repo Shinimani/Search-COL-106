@@ -112,6 +112,14 @@ public class PageEntry {
 		return (float) Math.log(N/nwp);
 	}
 	
+	public float getTermFrequency(String word)
+	{
+		WordEntry Word = this.ipi.set.findWord(word);
+		int fwp = Word.getCountInPage(this.name);
+		return fwp/this.TotalWords;
+	}
+	
+	
 	
 	
 
