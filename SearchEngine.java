@@ -26,13 +26,13 @@ public class SearchEngine {
 				String y = s.next();
 				Myset<PageEntry> PageSet = ipi.getPagesWhichContainWord(y);
 				Node<PageEntry> temp = PageSet.start();
-				String outp = "yoyoyoyo";
+				String outp = "";
 				while (temp!=null)
 				{
-					outp = outp + temp.getData().name + ", ";
+					outp = outp + temp.getData().name+"-" +" length "+temp.getData().TotalWords+ temp.getData().getRelevanceWord(y) +"tf-"+ temp.getData().getTermFrequency(y)+" idf-"+ temp.getData().idfWord(y) + ", ";
 					temp = temp.getLink();
 				}
-				if (!outp.equals("yoyoyoyo"))
+				if (!outp.equals(""))
 				{
 					outp = outp.substring(0, (outp.length() - 2));
 				} else outp = "not found";
@@ -97,21 +97,106 @@ public class SearchEngine {
 					str[i] = s.next();
 					i++;
 				}
-				String[] arr = Arrays.copyOfRange(str, 0, i-1);
+				String[] arr;
+				if(i!=1)
+				{
+				arr = Arrays.copyOfRange(str, 0, i-1);
+				}
+				else 
+				{
+				arr = new String[1];
+				arr[0] = str[0];
+				}
 				
 				ArrayList<SearchResult> ansList = this.ipi.sortedListPhrase(this.ipi.getPagesWhichContainPhrase(arr), arr);
 				String ans = "";
 				for (int k = 0; k<ansList.size();k++)
 				{
-					if (k==0)
-						ans = ansList.get(k).getPageEntry().name;
-					else
-					ans = ans + " -- " + ansList.get(k).getPageEntry().name;
+					if (k==0) ans = ansList.get(k).getPageEntry().name;
+//						ans = ansList.get(k).getPageEntry().name+ "," + ansList.get(k).getRelevance() + "," + ansList.get(k).getPageEntry().Phrasetf(arr);
+					else ans = ans + " -- " + ansList.get(k).getPageEntry().name;
+//					ans = ans + " -- " + ansList.get(k).getPageEntry().name + "," + ansList.get(k).getRelevance()+ "," + ansList.get(k).getPageEntry().Phrasetf(arr);
 				}
 				System.out.println(ans);
-				
-				
 			}
+		
+			else if (x.equals("queryFindPagesWhichContainAllWords"))
+			{
+				String[] str = new String[50];
+				int i = 0;
+				while (s.hasNext())
+				{
+					str[i] = s.next();
+					i++;
+				}
+				String[] arr;
+				if(i!=1)
+				{
+				arr = Arrays.copyOfRange(str, 0, i-1);
+				}
+				else 
+				{
+				arr = new String[1];
+				arr[0] = str[0];
+				}
+			
+				ArrayList<SearchResult> ansList = this.ipi.sortedListAND(this.ipi.getPagesAND(arr), arr);
+				for (int k = 0; k<ansList.size();k++)
+				{
+					if (ansList.get(k).getPageEntry().getRelevanceAND(arr)==0)
+					{
+						ansList.remove(k);
+					}
+				}
+				
+				String ans = "";
+				for (int k = 0; k<ansList.size();k++)
+				{
+					if (k==0) ans = ansList.get(k).getPageEntry().name;
+//						ans = ansList.get(k).getPageEntry().name+ "," + ansList.get(k).getRelevance() + "," + ansList.get(k).getPageEntry().getRelevanceAND(arr);
+					else ans = ans + " -- " + ansList.get(k).getPageEntry().name ;
+						
+//					ans = ans + " -- " + ansList.get(k).getPageEntry().name + "," + ansList.get(k).getRelevance()+ "," + ansList.get(k).getPageEntry().Phrasetf(arr);
+				}
+				System.out.println(ans);
+			}
+			else if (x.equals("queryFindPagesWhichContainAnyOfTheseWords"))
+			{
+				String[] str = new String[50];
+				int i = 0;
+				while (s.hasNext())
+				{
+					str[i] = s.next();
+					i++;
+				}
+				String[] arr;
+				if(i!=1)
+				{
+				arr = Arrays.copyOfRange(str, 0, i-1);
+				}
+				else 
+				{
+				arr = new String[1];
+				arr[0] = str[0];
+				}
+			
+				ArrayList<SearchResult> ansList = this.ipi.sortedListOR(this.ipi.getPagesOR(arr), arr);
+		
+				
+				String ans = "";
+				for (int k = 0; k<ansList.size();k++)
+				{
+					if (k==0)
+						ans = ansList.get(k).getPageEntry().name;
+//						ans = ansList.get(k).getPageEntry().name+ "," + ansList.get(k).getRelevance() + "," + ansList.get(k).getPageEntry().getRelevanceOR(arr);
+					else
+						ans = ans + " -- " + ansList.get(k).getPageEntry().name ;
+//					ans = ans + " -- " + ansList.get(k).getPageEntry().name + "," + ansList.get(k).getRelevance();
+				}
+				System.out.println(ans);
+			}
+		
+		
 			
 
 		}

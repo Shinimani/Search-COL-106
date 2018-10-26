@@ -75,7 +75,7 @@ public class PageEntry {
 	    	  x = s1.next();
 	    	  if ( x.equals("a") || x.equals("an")|| x.equals("the")||x.equals("they")||x.equals("these")||x.equals("this")||x.equals("for")||x.equals("is")||x.equals("are")||x.equals("was")||x.equals("of")||x.equals("or")||x.equals("and")||x.equals("does")||x.equals("will")||x.equals("whose"))
 	    	  {
-	    		  c++;
+//	    		  c++;
 	    	  }
 	    	  else
 	    	  {
@@ -107,16 +107,18 @@ public class PageEntry {
 	
 	public float idfWord(String word)
 	{
-		float N = this.ipi.getTotalPages();
-		float nwp = this.ipi.getPagesWhichContainWord(word).size();
+		double N = this.ipi.getTotalPages();
+		double nwp = this.ipi.getPagesWhichContainWord(word).size();
 		return (float) Math.log(N/nwp);
+//		return (float) N;
 	}
 	
 	public float getTermFrequency(String word)
 	{
 		WordEntry Word = this.ipi.set.findWord(word);
-		int fwp = Word.getCountInPage(this.name);
-		return fwp/this.TotalWords;
+		float fwp = Word.getCountInPage(this.name);
+		float TW = this.TotalWords;
+		return fwp/TW;
 	}
 	
 	public float getRelevanceWord(String word)
@@ -124,7 +126,7 @@ public class PageEntry {
 		return idfWord(word)*getTermFrequency(word);
 	}
 	
-	public float getRelavanceOR(String[] str)
+	public float getRelevanceOR(String[] str)
 	{
 		float ans = 0;
 		for(int i =0; i<str.length;i++)
@@ -157,12 +159,20 @@ public class PageEntry {
 		}
 		else return 0;
 	}
+	public float Phrasetf(String[] str)
+	{
+		float m = this.ipi.countOfPhraseInPage(str, this);
+		float tf = m/(this.TotalWords - (str.length - 1)*m);
+		return tf;
+	}
 	
 	public float getRelavancePhrase(String[] str)
 	{
-		int m = this.ipi.countOfPhraseInPage(str, this);
+		float m = this.ipi.countOfPhraseInPage(str, this);
 		float tf = m/(this.TotalWords - (str.length - 1)*m);
-		float idf = (float) Math.log(this.ipi.getTotalPages()/this.ipi.getPagesWhichContainPhrase(str).size());
+		double N = this.ipi.getTotalPages();
+		double nw = this.ipi.getPagesWhichContainPhrase(str).size(); 
+		float idf = (float) (Math.log(N/nw)*10000);
 		return tf*idf;
 	}
 	

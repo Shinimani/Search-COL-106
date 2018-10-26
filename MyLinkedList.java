@@ -1,4 +1,4 @@
-
+/*  Class Node  */
 class Node<T>
 {
     public T data;
@@ -9,6 +9,11 @@ class Node<T>
     {
         link = null;
         data = null;
+    }
+    public Node(T d)
+    {
+    	data = d;
+    	link = null;
     }
     /*  Constructor  */
     public Node(T d,Node<T> n)
@@ -38,6 +43,45 @@ class Node<T>
     }
 }
 
+//class Node<T>
+//{
+//    public T data;
+//    public Node<T> link;
+//
+//    /*  Constructor  */
+//    public Node()
+//    {
+//        link = null;
+//        data = null;
+//    }
+//    /*  Constructor  */
+//    public Node(T d,Node<T> n)
+//    {
+//        data = d;
+//        link = n;
+//    }
+//    /*  Function to set link to next Node  */
+//    public void setLink(Node<T> n)
+//    {
+//        link = n;
+//    }
+//    /*  Function to set data to current Node  */
+//    public void setData(T d)
+//    {
+//        data = d;
+//    }
+//    /*  Function to get link to next node  */
+//    public Node<T> getLink()
+//    {
+//        return link;
+//    }
+//    /*  Function to get data from current Node  */
+//    public T getData()
+//    {
+//        return data;
+//    }
+//}
+
 
 public class MyLinkedList<T> 
 {
@@ -58,18 +102,31 @@ public class MyLinkedList<T>
 		return start == null;
 	}
 	//Is member checker
-	public boolean IsMember(T o)
+	public boolean IsMember(T data)
 	{
-		if (size==0) {return false;}
-		if (size ==1) {return (o == start.getData());}
-		Node<T> ptr = new Node<T>();
-		ptr = start;
-		if (start.getData()==o) {return true;} else ptr=start.getLink();
-		while (ptr != null)
-		{
-			if (ptr.getData()==o) {return true;} else ptr=ptr.getLink();
-		}
-		return false;
+		 Node<T> temp = start;
+	        if(temp == null){
+	            return false;
+	        }else {
+	            while ( temp != null && temp.getData() != data) {
+	                temp = temp.getLink();
+	            }
+	            if (temp != null) {
+	                return true;
+	            } else {
+	                return false;
+	            }
+	        }
+//		if (size==0) {return false;}
+//		if (size ==1) {return (o.equals(start.getData()));}
+//		Node<T> ptr = new Node<T>();
+//		ptr = start;
+//		if (start.getData().equals(o)) {return true;} else ptr=start.getLink();
+//		while (ptr != null)
+//		{
+//			if (ptr.getData().equals(o)) {return true;} else ptr=ptr.getLink();
+//		}
+//		return false;
 	}
 	//Inserting int o to the beginning of the set method
 	public void Insert(T o)
@@ -122,7 +179,7 @@ public class MyLinkedList<T>
 
 			for (int i = 0; i< size -2;i++)
 			{
-				if (ptr.getData()==o)
+				if (ptr.getData().equals(o))
 				{
 					Node<T> tmp=ptr.getLink();
 					ptr.setData(tmp.getData());
@@ -134,12 +191,12 @@ public class MyLinkedList<T>
 				ptr = ptr.getLink();
 			}
 			Node<T> tmp = ptr.getLink();
-			if (ptr.getData()==o)
+			if (ptr.getData().equals(o))
 			{
 				ptr.setData(tmp.getData());
 				ptr.setLink(null);
 				k=1;
-			} else if (tmp.getData()==o)
+			} else if (tmp.getData().equals(o))
 			{
 				ptr.setLink(null);
 				k=1;

@@ -57,131 +57,163 @@ public class Myset<T>
 		return ll.start;
 	}
 
-	public Myset<T> Union(Myset<T> a)
+	public Myset<T> Union(Myset<T> A)
 	{
-		Myset<T> un = new Myset<T>();
-		int size = ll.size;
-		int as = a.size();
-		if(size ==0 && as ==0) return un;
+		 Myset<T> temp = new Myset<>();
+	        Node<T> temp1 = this.ll.start;
 
-		//If size of original is more, we will apply ismember on Myset a
-		if (size > as)
-		{
-			if (as==0)
-			{
+	        //copying the item in new set
+	        while(temp1 != null){
+	            temp.Insert( temp1.getData());
+	            temp1 = temp1.getLink();
+	        }
 
-				Node<T> ptr1 = ll.start;
-				for (int i = 0;i<size;i++)
-				{
-					un.Insert(ptr1.getData());
-					ptr1=ptr1.getLink();
-					un.ll.size++;
-				}
-				return un;
-			}
-			else
-			{
-				Node<T> ptr = ll.start;
-				for (int i = 0; i<size;i++)
-				{
-					if (a.IsMember (ptr.getData()))
-					{
-						ptr=ptr.getLink();
-					}
-					else
-					{
-						un.Insert(ptr.getData());
-						ptr=ptr.getLink();
-						un.ll.size++;
-					}
-				}
-				Node<T> ptr1 = a.ll.start;
-				for (int i = 0;i<as;i++)
-				{
-					un.Insert(ptr1.getData());
-					ptr1=ptr1.getLink();
-					un.ll.size++;
-				}
-				return un;
-			}
-		}
-		else //If size of a is greater, we apply ismember on original
-		{
-			if (size==0)
-			{
-				return a;
-			}
-			else
-			{
-				Node<T> ptr = a.ll.start;
-				for (int i = 0; i<as;i++)
-				{
-					if (IsMember (ptr.getData()))
-					{
-						ptr=ptr.getLink();
-					}
-					else
-					{
-						un.Insert(ptr.getData());
-						ptr=ptr.getLink();
-						un.ll.size++;
-
-					}
-				}
-				Node<T> ptr1 = ll.start;
-				for (int i = 0;i<size;i++)
-				{
-					un.Insert(ptr1.getData());
-					ptr1=ptr1.getLink();
-					un.ll.size++;
-				}
-				return un;
-			}
-		}
-
-
+	        temp1 = A.ll.start;
+	        //copying the item in new set
+	        while(temp1 != null){
+	            temp.Insert(temp1.getData());
+	            temp1 = temp1.getLink();
+	        }
+	        return temp;
 	}
+		
+//		Myset<T> un = new Myset<T>();
+//		int size = ll.size;
+//		int as = a.size();
+//		if(size ==0 && as ==0) return un;
+//
+//		//If size of original is more, we will apply ismember on Myset a
+//		if (size > as)
+//		{
+//			if (as==0)
+//			{
+//
+//				Node<T> ptr1 = ll.start;
+//				for (int i = 0;i<size;i++)
+//				{
+//					un.Insert(ptr1.getData());
+//					ptr1=ptr1.getLink();
+//					un.ll.size++;
+//				}
+//				return un;
+//			}
+//			else
+//			{
+//				Node<T> ptr = ll.start;
+//				for (int i = 0; i<size;i++)
+//				{
+//					if (a.IsMember (ptr.getData()))
+//					{
+//						ptr=ptr.getLink();
+//					}
+//					else
+//					{
+//						un.Insert(ptr.getData());
+//						ptr=ptr.getLink();
+//						un.ll.size++;
+//					}
+//				}
+//				Node<T> ptr1 = a.ll.start;
+//				for (int i = 0;i<as;i++)
+//				{
+//					un.Insert(ptr1.getData());
+//					ptr1=ptr1.getLink();
+//					un.ll.size++;
+//				}
+//				return un;
+//			}
+//		}
+//		else //If size of a is greater, we apply ismember on original
+//		{
+//			if (size==0)
+//			{
+//				return a;
+//			}
+//			else
+//			{
+//				Node<T> ptr = a.ll.start;
+//				for (int i = 0; i<as;i++)
+//				{
+//					if (IsMember (ptr.getData()))
+//					{
+//						ptr=ptr.getLink();
+//					}
+//					else
+//					{
+//						un.Insert(ptr.getData());
+//						ptr=ptr.getLink();
+//						un.ll.size++;
+//
+//					}
+//				}
+//				Node<T> ptr1 = ll.start;
+//				for (int i = 0;i<size;i++)
+//				{
+//					un.Insert(ptr1.getData());
+//					ptr1=ptr1.getLink();
+//					un.ll.size++;
+//				}
+//				return un;
+//			}
+//		}
 
+	
+    public Myset<T> Intersection(Myset<T> A){
+        Myset<T> temp = new Myset<>();
 
+        Node<T> temp1 = A.ll.start;
+        while(temp1 != null){
+            if(IsMember(temp1.getData())){
+                temp.Insert(temp1.getData());
+            }
+            temp1 = temp1.getLink();
+        }
 
-	public Myset<T> Intersection(Myset<T> a)
-	{
-		Myset<T> inter = new Myset<T>();
-		int as = a.ll.size;
-		if (as==0) return inter;
-		if (ll.size==0) return inter;
-		if (as > ll.size)
-		{
-			Node<T> ptr = a.ll.start;
-			for (int i=0;i<as;i++)
-			{
-				if (IsMember(ptr.getData()))
-				{
-					inter.Insert(ptr.getData());
-					ptr=ptr.getLink();
-					(inter.ll.size)++;
-				}
-				else ptr=ptr.getLink();
-			}
-		}
-		else
-		{
-			Node<T> ptr = ll.start;
-			for (int i=0;i<ll.size;i++)
-			{
-				if (a.IsMember(ptr.getData()))
-				{
-					inter.Insert(ptr.getData());
-					ptr=ptr.getLink();
-					inter.ll.size++;
+        if(temp.ll.size <1){
+            return null;
+        }
+        return temp;
+    }
 
-				}
-				else ptr=ptr.getLink();
-			}
-		}
-		return inter;
-
-	}
+//
+//	public Myset<T> Intersection(Myset<T> a)
+//	{
+//		Myset<T> inter = new Myset<T>();
+//		int as = a.ll.size;
+//		if (as==0) return inter;
+//		if (ll.size==0) return inter;
+//		if (as > ll.size)
+//		{
+//			Node<T> ptr = a.ll.start;
+//			for (int i=0;i<as;i++)
+//			{
+//				if (IsMember(ptr.getData()))
+//				{
+//					inter.Insert(ptr.getData());
+//					ptr=ptr.getLink();
+//					(inter.ll.size)++;
+//				}
+//				else ptr=ptr.getLink();
+//			}
+//		}
+//		else
+//		{
+//			Node<T> ptr = ll.start;
+//			for (int i=0;i<ll.size;i++)
+//			{
+//				if (a.IsMember(ptr.getData()))
+//				{
+//					inter.Insert(ptr.getData());
+//					ptr=ptr.getLink();
+//					inter.ll.size++;
+//
+//				}
+//				else ptr=ptr.getLink();
+//			}
+//		}
+//		return inter;
+//
+//	}
 
 	public void display()
 	{

@@ -198,6 +198,34 @@ public class AVLTree
 	  return searchWC(root, wordIndex);
   }
 //same word index multiple times ho sakta hai, if ho to vo left child me hi hoga because <=
+  public boolean searchWCboolean(int wordIndex)
+  {
+	  return searchWCboolean(root, wordIndex);
+	    
+  }
+  public boolean searchWCboolean(AVLNode k, int wordIndex)
+  {
+	  boolean found = false;
+	  while ((k != null) && !found)
+	  {
+		  int kwordIndex = k.getData().getWCIndex();
+		  if (wordIndex < kwordIndex)
+		  {
+			  k = k.left;
+		  }
+		  else if (wordIndex > kwordIndex)
+		  {
+			  k = k.right;
+		  }
+		  else
+		  {
+			  found = true;
+			  break;
+		  }
+	  }
+	return found;  
+  }
+  
   public AVLNode searchWC(AVLNode k, int wordIndex)
   {
 	  boolean found = false;
