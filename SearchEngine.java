@@ -1,14 +1,15 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class SearchEngine {
 
 	public InvertedPageIndex ipi;
-	
+
 	SearchEngine()
 	{
 		ipi = new InvertedPageIndex();
 	}
-	
+
 	public void performAction(String actionMessage)
 	{
 		Scanner s = new Scanner(actionMessage);
@@ -68,10 +69,53 @@ public class SearchEngine {
 					outp = outp.substring(0, (outp.length() - 2));
 				} else outp = "not found";
 				System.out.println(outp);
+
+
+			}
+		
+//			else if (x.equals("queryFindPagesWhichContainPhrase"))
+//			{
+//				String[] str = new String[100];
+//				int i = 0;
+//				while (s.hasNext())
+//				{
+//					str[i] = s.next();
+//					i++;
+//				}
+//				String[] arr = Arrays.copyOfRange(str, 0, i-1);
+//				
+//				Myset<PageEntry> ans = ipi.getPagesWhichContainWord(arr[0]);
+//			}	
+//queryFindPagesWhichContainAllWords
+			else if (x.equals("queryFindPagesWhichContainPhrase"))
+			{
+				String[] str = new String[100];
+				int i = 0;
+				while (s.hasNext())
+				{
+					str[i] = s.next();
+					i++;
+				}
+				String[] arr = Arrays.copyOfRange(str, 0, i-1);
 				
 				
+				//yaha se aage ka dekh lena 
+				Myset<PageEntry> PageSet = ipi.getPagesWhichContainPhrase(arr);
+				Node<PageEntry> temp = PageSet.start();
+				String outp = "yoyoyoyo";
+				while (temp!=null)
+				{
+					outp = outp + temp.getData().name + ", ";
+					temp = temp.getLink();
+				}
+				if (!outp.equals("yoyoyoyo"))
+				{
+					outp = outp.substring(0, (outp.length() - 2));
+				} else outp = "not found";
+				System.out.println(outp);
 			}
 			
+
 		}
-	
+
 }
