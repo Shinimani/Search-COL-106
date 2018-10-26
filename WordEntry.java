@@ -3,16 +3,19 @@ public class WordEntry {
 	
 	public String word;
 	public MyLinkedList<Position> positionList;
+	public AVLTree avlTree;
 	
 	WordEntry(String word)
 	{
 		this.word = word;
 		this.positionList = new MyLinkedList<Position>();
+		this.avlTree = new AVLTree();
 	}
 	
 	public void addPosition(Position position)
 	{
 		this.positionList.Insert(position);
+		this.avlTree.insert(position);
 	}
 	
 	public void addPositions(MyLinkedList<Position> positions)
@@ -40,9 +43,25 @@ public class WordEntry {
 	}
 	
 	//to make it
+	public int getCountInPage(String pageName)
+	{
+		Node<Position> ptr = this.positionList.start;
+		int ans = 0;
+		while (ptr!=null)
+		{
+			if (ptr.getData().getPageEntry().name.equals(pageName)) ans++;
+			ptr = ptr.getLink();
+		}
+		return ans;
+	}
+	
 	public float getTermFrequency(String word)
 	{
-		return 0;
+		float fw = this.getCountInPage(word);
+		Node<Position> ptr = this.positionList.start;
+		PageEntry pe = new PageEntry(word);
+		float wp = pe.Wp;
+		return (fw/wp);
 	}
 	
 	

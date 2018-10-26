@@ -8,6 +8,7 @@ public class PageEntry {
 	
 	public PageIndex pageindex;
 	public String name;
+	public int Wp;
 	
 	PageEntry(String pageName)
 	{
@@ -64,6 +65,7 @@ public class PageEntry {
 	      Scanner s1 = new Scanner(temp);
 	      String x="";
 	      int c = 0;
+	      int d = 0;
 	      // System.out.println("Begin");
 	      
 	      while (s1.hasNext())
@@ -76,10 +78,13 @@ public class PageEntry {
 	    	  else
 	    	  {
 	    		  c++;
-	    		  Position p = new Position(this,c);
+	    		  d++;
+	    		  Position p = new Position(this,c,d);
 	    		  this.pageindex.addPositionForWord(x, p);
 	    	  }
 	      }
+	      
+	      this.Wp = c;
 
 	      // System.out.println("End");
 	      // System.out.println(temp);

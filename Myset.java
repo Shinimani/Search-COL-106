@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 //int not found exception
 class ObjectNotFoundException extends Exception
@@ -8,7 +9,8 @@ class ObjectNotFoundException extends Exception
 	}
 }
 
-public class Myset<T> {
+public class Myset<T> 
+{
 	public MyLinkedList<T> ll;
 
 
@@ -190,14 +192,18 @@ public class Myset<T> {
 			temp = temp.getLink();
 		}
 	}
-
-
-
-
-
-
-
-
+	
+	public ArrayList<T> convertToArrayList()
+	{
+		Node<T> ptr = this.start();
+		ArrayList<T> ans = new ArrayList<T>();
+		while (ptr!=null)
+		{
+			ans.add(ptr.getData());
+			ptr = ptr.getLink();
+		}
+		return ans;
+	}
 
 
 }

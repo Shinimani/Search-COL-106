@@ -71,6 +71,24 @@ public class MyHashTable {
 		ans = ans %101;
 		return ans;
 	}
+
+	public WordEntry findWord(String word)
+	{
+		WordEntry ans = null;
+		int hash = this.getHashIndex(word);
+		HashEntry hashe = this.table[hash];
+		while (hashe!=null)
+		{
+			if (hashe.value.word.equalsIgnoreCase(word))
+			{
+				ans = hashe.value;
+				break;
+
+			}
+			else hashe = hashe.next;
+		}
+		return ans;
+	}
 	
 	
 	
