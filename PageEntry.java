@@ -119,6 +119,11 @@ public class PageEntry {
 		return fwp/this.TotalWords;
 	}
 	
+	public float getRelevanceWord(String word)
+	{
+		return idfWord(word)*getTermFrequency(word);
+	}
+	
 	
 	
 	
